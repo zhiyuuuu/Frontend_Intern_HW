@@ -13,7 +13,7 @@ function App() {
     console.log(codeParam);
 
     //local storage
-    if (codeParam && (localStorage.getItem("accessToken") === null)) {
+    if (codeParam && (localStorage.getItem("accessToken") === "undefined")) {
       async function getAccessToken() {
         await getGitHubToken(codeParam).then((data) => {
           console.log('data in frontend', data); 
@@ -29,15 +29,19 @@ function App() {
       }
       getAccessToken(); 
     }
+    // else {
+    //   console.log(localStorage.getItem("accessToken"));
+    //   console.log('not enter loop');
+    // }
   }, []);
 
   return (
     <div className="App">
-      {/* <Login/> */}
-      {
+      <Login/>
+      {/* {
         localStorage.getItem('accessToken') ?
         <MainPage />:<Login />
-      }
+      } */}
     </div>
   );
 }
