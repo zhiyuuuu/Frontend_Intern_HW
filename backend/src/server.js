@@ -21,9 +21,19 @@ const getAccessToken = async(code) => {
     const params = "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code;
   
     return await axios.post("https://github.com/login/oauth/access_token" + params).then((res) => {
-      console.log('received from github', res);
+    //   console.log('received from github', res);
       return res.data;
     })
+}
+
+const fetchUserData = async(token) => {
+    // console.log('authorization token', token);
+    return await axios.get("https://api.github.com/issues", { headers: {"Authorization": token} }).then((res) => {
+        console.log('fetch user data from github', res.data);
+        return res.data;
+    })
+    // .catch((err) => {
+    //     throw new Error('get access token failed', err)});
 }
 
 
@@ -32,26 +42,17 @@ app.get('/getAccessToken', async function (req, res) {
     const code = req.query.code;
     // console.log('code from frontend=', code);
     const data = await getAccessToken(code);
-    console.log('data in server', data);
+    // console.log('data in server', data);
     res.json(data)
 })
 
 //get user data
 app.get('/getUserData', async function(req, res) {
     console.log('get user data', req.get("Authorization"))
-    await fetch("https://api.github.com/user", {
-        method: "GET",
-        headers: {
-            "Authorization": req.get("Authorization")
-        }
-    }).catch((err) => {
-        throw new Error('get access token failed', err);
-    }).then((response) => {
-        return response.json();
-    }).then((data) => {
-        console.log('data', data);
-        res.json(data);
-    })
+
+    const data = await fetchUserData(req.get("Authorization"));
+    console.log('fetch user data', data);
+    res.json(data)
 })
 
 
