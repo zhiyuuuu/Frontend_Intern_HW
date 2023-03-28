@@ -7,6 +7,12 @@ const API_ROOT =
 
 const instance = axios.create({ baseURL: API_ROOT });
 
-const getGitHubToken = async(data) => {
 
+const getGitHubToken = async(code) => {
+  return await instance.get("/getAccessToken?code=" + code).then((res) => {
+    console.log('receive from server', res);
+    return res.data;
+  });
 }
+
+export { getGitHubToken } 
