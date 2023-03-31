@@ -1,24 +1,44 @@
-const MainPage = () => {
+import { useState } from "react";
+import { getIssues } from "../api";
+import "../css/Main.css";
 
-    async function getUserData() {
-        await fetch("http://localhost:4000/getUserData", {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer" + localStorage.getItem("accessToken")
-          }
-        }).then((response) => {
-          return response.json();
-        }).then((data) => {
-          console.log(data);
-        })
-    }
+const MainPage = ({ rerender, setRerender }) => {
 
-    return(
-        <>
-            <h3>Logged in!</h3>
-            <button onClick={getUserData()}>Get user data</button>
-        </>
-    )
+  const [issues, setIssues] = useState([]);
+
+  return(
+	<div className="main-container">
+		<div className="tasks">
+      	{/* <h3>Logged in!</h3>
+      	<button onClick={() => {
+        	const data = getIssues("Bearer " + localStorage.getItem("accessToken"));
+          	setIssues(data);
+        }}>Get issue data</button>
+      	<button onClick={() => {
+        	localStorage.setItem("accessToken", "undefined");
+        	setRerender(!rerender);
+     	}}>Log out</button> */}
+			<div className="task">
+				<div className="state-row">
+					<div className="task-state">Open</div>
+					<div className="task-action">action</div>
+				</div>
+				<div className="task-title">Title</div>
+				<div className="task-body">body</div>
+			</div>
+			{
+				issues.map((task) => {
+					<div className="task">
+						<div className="task-state">{ task.state }</div>
+						<div className="task-title">{ task.title }</div>
+						<div className="task-body">{ task.body }</div>
+						<div className="task-action"></div>
+					</div>
+				})
+			}
+    	</div>
+	</div>
+  )
 }
 
 export default MainPage;
