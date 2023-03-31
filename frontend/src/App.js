@@ -18,8 +18,8 @@ function App() {
         await getGitHubToken(codeParam).then((data) => {
           console.log('data in frontend', data); 
           //string type : access_token=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&scope=&token_type=bearer
-          const tokenStr = data.substr(13);
-          console.log('token content', tokenStr);
+          const tokenStr = data.slice(13, -25);
+          console.log('token slice content', tokenStr);
           if (tokenStr.length > 0) {
             localStorage.setItem("accessToken", tokenStr);
             setRerender(!rerender);
@@ -37,11 +37,10 @@ function App() {
 
   return (
     <div className="App">
-      <Login/>
-      {/* {
-        localStorage.getItem('accessToken') ?
-        <MainPage />:<Login />
-      } */}
+      {
+        localStorage.getItem("accessToken") === "undefined" ?
+        <Login />:<MainPage rerender={rerender} setRerender={setRerender}/>
+      }
     </div>
   );
 }

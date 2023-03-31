@@ -15,4 +15,11 @@ const getGitHubToken = async(code) => {
   });
 }
 
-export { getGitHubToken } 
+const getIssues = async(token) => {
+  return await instance.get("/getIssueData", { headers: { 'Authorization': token } }).then((res) => {
+    console.log('received user data', res);
+    return res.data;
+  })
+}
+
+export { getGitHubToken, getIssues } 

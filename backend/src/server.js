@@ -10,6 +10,7 @@ import axios from 'axios';
 
 const CLIENT_ID = "a578daa362dae8069c34";
 const CLIENT_SECRET = "39e4e1c518cdd6cb88ce3a8ff32b93d8eb6d1114";
+const PERSONAL_ACCESS_TOKEN = "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";
 
 const app = express();
 
@@ -20,20 +21,79 @@ app.use(bodyParser.json());
 const getAccessToken = async(code) => {
     const params = "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code;
   
-    return await axios.post("https://github.com/login/oauth/access_token" + params).then((res) => {
+    return await axios.post("https://github.com/login/oauth/access_token" + params, {
+        headers: {
+            "X-OAuth-Scopes": "repo, user",
+            "X-Accepted-OAuth-Scopes": "user"
+        }
+    }).then((res) => {
     //   console.log('received from github', res);
       return res.data;
     })
 }
 
 const fetchUserData = async(token) => {
-    // console.log('authorization token', token);
-    return await axios.get("https://api.github.com/issues", { headers: {"Authorization": token} }).then((res) => {
-        console.log('fetch user data from github', res.data);
+    return await axios.get("https://api.github.com/user", 
+    {
+        headers: {
+            "Authorization": token
+        }
+    }).then((res) => {
+        // console.log("User data from github", res.data);
         return res.data;
     })
-    // .catch((err) => {
-    //     throw new Error('get access token failed', err)});
+}
+
+const fetchRepos = async(owner, token) => {
+    const namelist = []
+    return await axios.get(`https://api.github.com/users/${owner}/repos`, 
+    {   
+            headers: {
+                "Authorization": token
+            }
+        }).then((res) => {
+            res.data.map((repo) => {
+                namelist.push(repo.full_name)
+            })
+            console.log("User repo full name from github", namelist);
+            return namelist;
+        })
+}
+
+// const fetchUserIssue = async(token) => {
+//     console.log('authorization token', token);
+//     const user = await fetchUserData(token);
+//     const userName = user.login;
+//     const repoList = await fetchRepos(userName, token);
+//     // console.log('repo', repoList);
+//     // console.log('username', userName);
+//     const issues = []
+//     async function listRepoIssues () { 
+//         repoList.map(async(repo) => {
+//             const issue = await axios.get(`https://api.github.com/repos/${repo}/issues`, {
+//                 headers: {
+//                     "Authorization": token
+//                 }
+//             }).then((res) => {
+//                 console.log('Issues in repo ', repo,':', res.data);
+//                 return res.data;
+//             })
+//             issues.push(issue);
+//         })
+//     }
+//     await listRepoIssues();
+//     console.log('issues', issues);
+// }
+
+const fetchAssignedIssues = async(token) => {
+    return await axios.get("https://api.github.com/issues?state=all", {
+        headers: {
+            "Authorization": token
+        }
+    }).then((res) => {
+        console.log('assigned', res.data);
+        return res.data;
+    })
 }
 
 
@@ -47,12 +107,14 @@ app.get('/getAccessToken', async function (req, res) {
 })
 
 //get user data
-app.get('/getUserData', async function(req, res) {
-    console.log('get user data', req.get("Authorization"))
+app.get('/getIssueData', async function(req, res) {
+    console.log('get access token', req.get("Authorization"))
 
-    const data = await fetchUserData(req.get("Authorization"));
-    console.log('fetch user data', data);
-    res.json(data)
+    // const data = await fetchUserIssue(req.get("Authorization"));
+    const personal_token = "token " + PERSONAL_ACCESS_TOKEN
+    const issuedata = await fetchAssignedIssues(personal_token)
+    // console.log('fetch issue data', issuedata);
+    res.json(issuedata);
 })
 
 
