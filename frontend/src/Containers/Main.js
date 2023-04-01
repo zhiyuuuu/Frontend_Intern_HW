@@ -34,11 +34,13 @@ const MainPage = ({ rerender, setRerender }) => {
 				<div className="task-body">body</div>
 			</div>
 			{
-				issues.map((task) => (
-					<div className="task">
+				issues.map((task, i) => (
+					<div className="task" key={i}>
 						<div className="state-row">
 							<div className="task-state">{ task.state }</div>
-							<div className="task-action">action</div>
+							<div className="task-action">
+								<DropDownMenu />
+							</div>
 						</div>
 						<div className="task-title">{ task.title }</div>
 						<div className="task-body">{ task.body }</div>

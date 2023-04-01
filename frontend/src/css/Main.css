@@ -46,3 +46,9 @@
     font-size: x-large;
     font-weight: 600;
 }
+
+.ant-dropdown-menu-title-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}

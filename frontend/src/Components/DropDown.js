@@ -1,42 +1,25 @@
-import { Dropdown, Menu } from "antd"
-
+import { Dropdown, Menu } from "antd";
+import { FiEdit } from "react-icons/fi";
+import { AiOutlineDelete } from "react-icons/ai";
+import { HiDotsVertical } from "react-icons/hi";
 
 const DropDownMenu = () => {
 
-    const actionItems = [
-        {
-            key: '1',
-            label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                1st menu item
-            </a>
-            )
-        },
-        {
-            key: '1',
-            label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                1st menu item
-            </a>
-            )
-        }
-    ]
-
     const menu = (
         <Menu>
-          <Menu.Item key="1">Option 1</Menu.Item>
-          <Menu.Item key="2">Option 2</Menu.Item>
+          <Menu.Item key="1"><FiEdit /> Edit</Menu.Item>
+          <Menu.Item key="2"><AiOutlineDelete /> Delete</Menu.Item>
         </Menu>
     );
 
 
     return(
         <>
-        <Dropdown overlay={menu}>
-            <a onClick={(e) => e.preventDefault()}>
-                Hover me
-            </a>
-        </Dropdown>
+            <Dropdown overlay={menu}>
+                <a onClick={(e) => e.preventDefault()}>
+                    <HiDotsVertical />
+                </a>
+            </Dropdown>
         </>
     )
 }
