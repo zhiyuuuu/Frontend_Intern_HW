@@ -2,9 +2,7 @@ import { Select, Input } from "antd";
 import { useState } from "react";
 import { BsFilterCircle } from 'react-icons/bs';
 
-const Header = ({ setOrder }) => {
-
-    const [rerender, setRerender] = useState(false);
+const Header = ({ setOrder, render, setRender }) => {
 
     const handleFilterTime = (value) => {
         if(value === 'Oldest') {
@@ -74,7 +72,7 @@ const Header = ({ setOrder }) => {
             <div className="logout">
                 <button onClick={() => {
                     localStorage.setItem("accessToken", "undefined");
-                    setRerender(!rerender);
+                    setRender(!render);
                 }}>
                     Log out
                 </button>

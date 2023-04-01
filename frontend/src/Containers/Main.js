@@ -4,7 +4,7 @@ import "../css/Main.css";
 import DropDownMenu from "../Components/DropDown";
 import Header from "./Header";
 
-const MainPage = () => {
+const MainPage = ({ render, setRender }) => {
 
   const [issues, setIssues] = useState([]);
   const [reverseOrder, setReverseOrder] = useState(false);
@@ -20,7 +20,7 @@ const MainPage = () => {
 
   return(
 	<div className="main-container">
-		<Header setOrder={ setReverseOrder }/>
+		<Header setOrder={ setReverseOrder } render={ render } setRender={ setRender }/>
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
