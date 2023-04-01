@@ -6,18 +6,36 @@ import Header from "./Header";
 
 const MainPage = ({ render, setRender }) => {
 
-  const [issues, setIssues] = useState([]);
-  const [reverseOrder, setReverseOrder] = useState(false);
-  const [state, setState] = useState("all");
+	const [issues, setIssues] = useState([]);
+	const [reverseOrder, setReverseOrder] = useState(false);
+	const [state, setState] = useState("all");
+	const [page, setPage] = useState(1);
 
-  useEffect(() => {
-	async function importIssues(accessToken) {
-		const data = await getIssues(accessToken);
-		console.log('frontend issues', data);
-		setIssues(data);
-	}
-	importIssues("Bearer " + localStorage.getItem("accessToken"))
-  }, [])
+	useEffect(() => {
+		async function importIssues(accessToken, page) {
+			const data = await getIssues(accessToken, page);
+			console.log('frontend issues', data);
+			setIssues([...issues, ...data]);
+		}
+		
+		importIssues("Bearer " + localStorage.getItem("accessToken"), page)
+
+		const handleScroll = () => {
+			const scrollHeight = document.documentElement.scrollHeight;
+			const scrollTop = document.documentElement.scrollTop;
+			const clientHeight = document.documentElement.clientHeight;
+			if (scrollTop + clientHeight >= scrollHeight) {
+				setPage(page + 1);
+			}
+		};
+		window.addEventListener('scroll', handleScroll);
+	
+		return () => {
+		  window.removeEventListener('scroll', handleScroll);
+		};
+	}, [page])
+
+	
 
   return(
 	<div className="main-container">
@@ -28,16 +46,6 @@ const MainPage = ({ render, setRender }) => {
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
-			<div className="task">
-				<div className="state-row">
-					<div className="task-state">Open</div>
-					<div className="task-action">
-						<DropDownMenu />
-					</div>
-				</div>
-				<div className="task-title">Title</div>
-				<div className="task-body">body</div>
-			</div>
 			{
 				issues.map((task, i) => (
 					<div className="task" 
