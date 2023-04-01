@@ -28,6 +28,11 @@
     justify-content: space-around;
 }
 
+.task:hover {
+    cursor: pointer;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 .state-row {
     display: flex;
     justify-content: space-between;
