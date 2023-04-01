@@ -7,6 +7,7 @@ import Header from "./Header";
 const MainPage = () => {
 
   const [issues, setIssues] = useState([]);
+  const [reverseOrder, setReverseOrder] = useState(false);
 
   useEffect(() => {
 	async function importIssues(accessToken) {
@@ -19,8 +20,10 @@ const MainPage = () => {
 
   return(
 	<div className="main-container">
-		<Header />
-		<div className="tasks">
+		<Header setOrder={ setReverseOrder }/>
+		<div className="tasks" style={
+			reverseOrder?
+				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
 			<div className="task">
 				<div className="state-row">
 					<div className="task-state">Open</div>

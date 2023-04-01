@@ -2,9 +2,18 @@ import { Select, Input } from "antd";
 import { useState } from "react";
 import { BsFilterCircle } from 'react-icons/bs';
 
-const Header = () => {
+const Header = ({ setOrder }) => {
 
     const [rerender, setRerender] = useState(false);
+
+    const handleFilterTime = (value) => {
+        if(value === 'Oldest') {
+            setOrder(true);
+        }
+        else {
+            setOrder(false);
+        }
+    }
 
     return(
         <div className="header-container">
@@ -16,7 +25,9 @@ const Header = () => {
                         style={{
                             width: 120,
                         }}
-                        // onChange={handleChange}
+                        onChange={(e) => {
+                            handleFilterTime(e);
+                        }}
                         options={[
                             {
                             value: 'Newest',
