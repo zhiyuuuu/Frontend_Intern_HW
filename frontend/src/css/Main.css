@@ -35,7 +35,7 @@
 
 .task-state {
     width: 17%;
-    background-color: darkgray;
+    background-color: rgb(203, 200, 200);
     text-align: center;
     border-radius: 10px;
     padding: 10px 0;
@@ -45,6 +45,16 @@
 .task-title {
     font-size: x-large;
     font-weight: 600;
+}
+
+.task-body {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-body::after {
+    content: "...";
 }
 
 .ant-dropdown-menu-title-content {
