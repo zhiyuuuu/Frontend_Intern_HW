@@ -62,3 +62,25 @@
     align-items: center;
     justify-content: flex-start;
 }
+
+.header-container {
+    height: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.filter-container {
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+
+#filter-icon {
+    margin: 3%;
+}
+
+.filter-time {
+    margin-right: 3%;
+}

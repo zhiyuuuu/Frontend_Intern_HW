@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { getIssues } from "../api";
 import "../css/Main.css";
 import DropDownMenu from "../Components/DropDown";
+import Header from "./Header";
 
-const MainPage = ({ rerender, setRerender }) => {
+const MainPage = () => {
 
   const [issues, setIssues] = useState([]);
 
@@ -18,10 +19,7 @@ const MainPage = ({ rerender, setRerender }) => {
 
   return(
 	<div className="main-container">
-		<button onClick={() => {
-        	localStorage.setItem("accessToken", "undefined");
-        	setRerender(!rerender);
-     	}}>Log out</button>
+		<Header />
 		<div className="tasks">
 			<div className="task">
 				<div className="state-row">
