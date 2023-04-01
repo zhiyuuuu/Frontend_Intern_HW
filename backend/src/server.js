@@ -86,7 +86,7 @@ const fetchRepos = async(owner, token) => {
 // }
 
 const fetchAssignedIssues = async(token) => {
-    return await axios.get("https://api.github.com/issues?state=all", {
+    return await axios.get("https://api.github.com/issues?filter=all&per_page=10", {
         headers: {
             "Authorization": token
         }
