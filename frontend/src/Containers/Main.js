@@ -8,6 +8,7 @@ const MainPage = ({ render, setRender }) => {
 
   const [issues, setIssues] = useState([]);
   const [reverseOrder, setReverseOrder] = useState(false);
+  const [state, setState] = useState("all");
 
   useEffect(() => {
 	async function importIssues(accessToken) {
@@ -20,7 +21,10 @@ const MainPage = ({ render, setRender }) => {
 
   return(
 	<div className="main-container">
-		<Header setOrder={ setReverseOrder } render={ render } setRender={ setRender }/>
+		<Header setOrder={ setReverseOrder } 
+			render={ render } 
+			setRender={ setRender } 
+			setState={ setState }/>
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
@@ -36,7 +40,13 @@ const MainPage = ({ render, setRender }) => {
 			</div>
 			{
 				issues.map((task, i) => (
-					<div className="task" key={i}>
+					<div className="task" 
+						key={i} 
+						style={
+							(state === "all")?
+								{display: "flex"}:task.state === state?
+									{display: "flex"}:{display: "none"}
+						}>
 						<div className="state-row">
 							<div className="task-state">{ task.state }</div>
 							<div className="task-action">

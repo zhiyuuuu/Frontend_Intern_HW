@@ -2,7 +2,7 @@ import { Select, Input } from "antd";
 import { useState } from "react";
 import { BsFilterCircle } from 'react-icons/bs';
 
-const Header = ({ setOrder, render, setRender }) => {
+const Header = ({ setOrder, render, setRender, setState }) => {
 
     const handleFilterTime = (value) => {
         if(value === 'Oldest') {
@@ -11,6 +11,12 @@ const Header = ({ setOrder, render, setRender }) => {
         else {
             setOrder(false);
         }
+    }
+
+    const handleSort = (value) => {
+        console.log(value);
+        setState(value);
+        setRender(!render);
     }
 
     return(
@@ -44,14 +50,14 @@ const Header = ({ setOrder, render, setRender }) => {
                         style={{
                             width: 120,
                         }}
-                        // onChange={handleChange}
+                        onChange={(e) => handleSort(e)}
                         options={[
                             {
-                                value: 'All',
+                                value: 'all',
                                 label: 'All',
                             },
                             {
-                                value: 'Open',
+                                value: 'open',
                                 label: 'Open',
                             },
                             {
@@ -59,7 +65,7 @@ const Header = ({ setOrder, render, setRender }) => {
                                 label: 'In Progress'
                             },
                             {
-                                value: 'Closed',
+                                value: 'closed',
                                 label: 'Closed'
                             }
                         ]}

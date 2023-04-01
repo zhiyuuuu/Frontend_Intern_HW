@@ -15,8 +15,8 @@ const getGitHubToken = async(code) => {
   });
 }
 
-const getIssues = async(token) => {
-  return await instance.get("/getIssueData", { headers: { 'Authorization': token } }).then((res) => {
+const getIssues = async(token, state) => {
+  return await instance.get("/getIssueData", { headers: { 'Authorization': token}}).then((res) => {
     // console.log('received user data', res);
     return res.data;
   })

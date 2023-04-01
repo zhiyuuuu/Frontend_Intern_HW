@@ -86,12 +86,12 @@ const fetchRepos = async(owner, token) => {
 // }
 
 const fetchAssignedIssues = async(token) => {
-    return await axios.get("https://api.github.com/issues?filter=all&per_page=10", {
+    return await axios.get(`https://api.github.com/issues?filter=all&per_page=10&state=all`, {
         headers: {
             "Authorization": token
         }
     }).then((res) => {
-        console.log('assigned', res.data);
+        // console.log('assigned', res.data);
         return res.data;
     })
 }
@@ -109,7 +109,8 @@ app.get('/getAccessToken', async function (req, res) {
 //get user data
 app.get('/getIssueData', async function(req, res) {
     console.log('get access token', req.get("Authorization"))
-
+    // console.log('get state', req.get("state"));
+    // const state = req.get("state");
     // const data = await fetchUserIssue(req.get("Authorization"));
     const personal_token = "token " + PERSONAL_ACCESS_TOKEN
     const issuedata = await fetchAssignedIssues(personal_token)
