@@ -10,14 +10,18 @@ const MainPage = ({ render, setRender }) => {
 	const [reverseOrder, setReverseOrder] = useState(false);
 	const [state, setState] = useState("all");
 	const [page, setPage] = useState(1);
+	const [hasMore, setHasMore] = useState(true);
 
 	useEffect(() => {
 		async function importIssues(accessToken, page) {
 			const data = await getIssues(accessToken, page);
 			console.log('frontend issues', data);
+			if (data.length === 0) {
+				setHasMore(false)
+			}
 			setIssues([...issues, ...data]);
 		}
-		
+
 		importIssues("Bearer " + localStorage.getItem("accessToken"), page)
 
 		const handleScroll = () => {
@@ -65,6 +69,9 @@ const MainPage = ({ render, setRender }) => {
 						<div className="task-body">{ task.body }</div>
 					</div>
 				))
+			}
+			{
+				!hasMore && <p>There are no more issues!</p>
 			}
     	</div>
 	</div>
