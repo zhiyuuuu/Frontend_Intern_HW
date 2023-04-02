@@ -11,18 +11,25 @@ const MainPage = ({ render, setRender }) => {
 	const [state, setState] = useState("all");
 	const [page, setPage] = useState(1);
 	const [hasMore, setHasMore] = useState(true);
+	const [searchValue, setSearchValue] = useState("");
 
 	useEffect(() => {
 		async function importIssues(accessToken, page) {
 			const data = await getIssues(accessToken, page);
-			console.log('frontend issues', data);
+			// console.log('frontend issues', data);
 			if (data.length === 0) {
 				setHasMore(false)
 			}
 			setIssues([...issues, ...data]);
 		}
 
-		importIssues("Bearer " + localStorage.getItem("accessToken"), page)
+		importIssues("Bearer " + localStorage.getItem("accessToken"), page);
+		
+		// if (searchValue != "") {
+		// 	console.log('search value != null');
+		// 	console.log('issues', issues);
+		// 	// filterIssues(issues);
+		// }
 
 		const handleScroll = () => {
 			const scrollHeight = document.documentElement.scrollHeight;
@@ -39,37 +46,71 @@ const MainPage = ({ render, setRender }) => {
 		};
 	}, [page])
 
-	
+
+	const filteredIssues = () =>{
+		console.log('issues', issues);
+		console.log('search value', searchValue);
+
+		return issues.filter(
+			(issue) =>
+				issue.title.toLowerCase().includes(searchValue.toLowerCase()) 
+				// ||
+				// issue.body.toLowerCase().includes(searchValue.toLowerCase())
+	);}
 
   return(
 	<div className="main-container">
 		<Header setOrder={ setReverseOrder } 
 			render={ render } 
 			setRender={ setRender } 
-			setState={ setState }/>
+			setState={ setState }
+			setSearchValue={ setSearchValue }/>
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
 			{
-				issues.map((task, i) => (
-					<div className="task" 
-						key={i} 
-						style={
-							(state === "all")?
-								{display: "flex"}:task.state === state?
-									{display: "flex"}:{display: "none"}
-						}>
-						<div className="state-row">
-							<div className="task-state">{ task.state }</div>
-							<div className="task-action">
-								<DropDownMenu />
+				searchValue === ""?
+				(	
+					issues.map((task, i) => (
+						<div className="task" 
+							key={i} 
+							style={
+								(state === "all")?
+									{display: "flex"}:task.state === state?
+										{display: "flex"}:{display: "none"}
+							}>
+							<div className="state-row">
+								<div className="task-state">{ task.state }</div>
+								<div className="task-action">
+									<DropDownMenu />
+								</div>
 							</div>
+							<div className="task-title">{ task.title }</div>
+							<div className="task-body">{ task.body }</div>
 						</div>
-						<div className="task-title">{ task.title }</div>
-						<div className="task-body">{ task.body }</div>
-					</div>
-				))
+					))
+				):(
+					filteredIssues().map((task, i) => (
+						<div className="task" 
+							key={i} 
+							style={
+								(state === "all")?
+									{display: "flex"}:task.state === state?
+										{display: "flex"}:{display: "none"}
+							}>
+							<div className="state-row">
+								<div className="task-state">{ task.state }</div>
+								<div className="task-action">
+									<DropDownMenu />
+								</div>
+							</div>
+							<div className="task-title">{ task.title }</div>
+							<div className="task-body">{ task.body }</div>
+						</div>
+					))
+				)
 			}
+			
 			{
 				!hasMore && <p>There are no more issues!</p>
 			}

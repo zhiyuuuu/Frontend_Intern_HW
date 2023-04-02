@@ -2,7 +2,7 @@ import { Select, Input } from "antd";
 import { useState } from "react";
 import { BsFilterCircle } from 'react-icons/bs';
 
-const Header = ({ setOrder, render, setRender, setState }) => {
+const Header = ({ setOrder, render, setRender, setState, setSearchValue }) => {
 
     const handleFilterTime = (value) => {
         if(value === 'Oldest') {
@@ -16,6 +16,12 @@ const Header = ({ setOrder, render, setRender, setState }) => {
     const handleSort = (value) => {
         console.log(value);
         setState(value);
+        setRender(!render);
+    }
+
+    const handleSearch = (value) => {
+        // console.log(value);
+        setSearchValue(value);
         setRender(!render);
     }
 
@@ -73,7 +79,7 @@ const Header = ({ setOrder, render, setRender, setState }) => {
                 </div>
             </div>
             <div className="searchbar">
-                <Input.Search placeholder="Search for your issues!"/>
+                <Input.Search placeholder="Search for your issues!" onSearch={handleSearch}/>
             </div>
             <div className="logout">
                 <button onClick={() => {
