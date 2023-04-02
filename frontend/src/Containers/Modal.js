@@ -1,8 +1,10 @@
-const Modal = () => {
+const Modal = ({ issue }) => {
     return(
         <div className="modal-container">
-            <div className="modal-title"></div>
-            <div className="modal-body"></div>
+            <div className="modal">
+                <div className="modal-title"> { issue.title } </div>
+                <div className="modal-body"> { issue.body } </div>
+            </div>
         </div>
     )
 }
