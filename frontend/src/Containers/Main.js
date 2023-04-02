@@ -51,12 +51,16 @@ const MainPage = ({ render, setRender }) => {
 		console.log('issues', issues);
 		console.log('search value', searchValue);
 
-		return issues.filter(
-			(issue) =>
-				issue.title.toLowerCase().includes(searchValue.toLowerCase()) 
-				// ||
-				// issue.body.toLowerCase().includes(searchValue.toLowerCase())
-	);}
+		const filtered = issues.filter((issue) => {
+			if (issue.body != null) {
+				return issue.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+				issue.body.toLowerCase().includes(searchValue.toLowerCase())
+			} else {
+				return issue.title.toLowerCase().includes(searchValue.toLowerCase()) 
+			}
+		})
+		return filtered;
+	}
 
   return(
 	<div className="main-container">
