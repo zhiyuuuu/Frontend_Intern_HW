@@ -89,3 +89,8 @@
 .filter-time {
     margin-right: 3%;
 }
+
+.notification {
+    display: flex;
+    justify-content: center;
+}

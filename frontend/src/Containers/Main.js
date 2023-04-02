@@ -3,6 +3,7 @@ import { getIssues } from "../api";
 import "../css/Main.css";
 import DropDownMenu from "../Components/DropDown";
 import Header from "./Header";
+import Modal from "./Modal";
 
 const MainPage = ({ render, setRender }) => {
 
@@ -24,12 +25,6 @@ const MainPage = ({ render, setRender }) => {
 		}
 
 		importIssues("Bearer " + localStorage.getItem("accessToken"), page);
-		
-		// if (searchValue != "") {
-		// 	console.log('search value != null');
-		// 	console.log('issues', issues);
-		// 	// filterIssues(issues);
-		// }
 
 		const handleScroll = () => {
 			const scrollHeight = document.documentElement.scrollHeight;
@@ -82,7 +77,8 @@ const MainPage = ({ render, setRender }) => {
 								(state === "all")?
 									{display: "flex"}:task.state === state?
 										{display: "flex"}:{display: "none"}
-							}>
+							}
+							onClick={ () => <Modal issue={ task }/> }>
 							<div className="state-row">
 								<div className="task-state">{ task.state }</div>
 								<div className="task-action">
@@ -114,11 +110,12 @@ const MainPage = ({ render, setRender }) => {
 					))
 				)
 			}
-			
-			{
-				!hasMore && <p>There are no more issues!</p>
-			}
     	</div>
+		{
+			!hasMore && <div className="notification">
+				There are no more issues!
+			</div>
+		}
 	</div>
   )
 }
