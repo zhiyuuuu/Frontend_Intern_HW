@@ -18,7 +18,7 @@ function App() {
         await getGitHubToken(codeParam).then((data) => {
           console.log('data in frontend', data); 
           //string type : access_token=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&scope=&token_type=bearer
-          const tokenStr = data.slice(13, -25);
+          const tokenStr = data.slice(13, -29);
           console.log('token slice content', tokenStr);
           if (tokenStr.length > 0) {
             localStorage.setItem("accessToken", tokenStr);
