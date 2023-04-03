@@ -1,11 +1,15 @@
 import { IoClose } from 'react-icons/io5';
-import { Input } from 'antd'; 
+import { Input, Form } from 'antd'; 
 import { useState } from 'react';
 
 const Modal = ({ issue, setOpen }) => {
     // console.log('issue for modal', issue);
 
     const [openEditor, setOpenEditor] = useState(false);
+
+    const handleOnFinish = (value) => {
+        console.log('onfinish', value);
+    }
 
     return(
         <div className="modal-container">
@@ -30,11 +34,35 @@ const Modal = ({ issue, setOpen }) => {
                     openEditor?
                         { display: "flex" }:{ display: "none" }
                 }>
-                    <Input.TextArea id='block-title' rows={1}/>
-                    <Input.TextArea id='block-body' rows={5}/>
-                    <div className="submit-button">
-                        <button>Update Issue</button>
-                    </div>
+                    <Form onFinish={ handleOnFinish }>
+                        <Form.Item 
+                            label="Title"
+                            name="Title"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter something.'
+                                }
+                            ]}>
+                                <Input.TextArea id='block-title' rows={1}/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Body"
+                            name="Body"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter at least 30 words.'
+                                }
+                            ]}>
+                                <Input.TextArea id='block-body' rows={5}/>
+                        </Form.Item>
+                        <Form.Item>
+                            <div className="submit-button">
+                                <button>Update Issue</button>
+                            </div>
+                        </Form.Item>
+                    </Form>
                 </div>
                 
             </div>
