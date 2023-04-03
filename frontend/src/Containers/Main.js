@@ -14,6 +14,9 @@ const MainPage = ({ render, setRender }) => {
 	const [hasMore, setHasMore] = useState(true);
 	const [searchValue, setSearchValue] = useState("");
 
+	const [openModal, setOpenModal] = useState(false);
+	const [modalContent, setModalContent] = useState([]);
+
 	useEffect(() => {
 		async function importIssues(accessToken, page) {
 			const data = await getIssues(accessToken, page);
@@ -24,7 +27,7 @@ const MainPage = ({ render, setRender }) => {
 			setIssues([...issues, ...data]);
 		}
 
-		importIssues("Bearer " + localStorage.getItem("accessToken"), page);
+		importIssues(localStorage.getItem("accessToken"), page);
 
 		const handleScroll = () => {
 			const scrollHeight = document.documentElement.scrollHeight;
@@ -78,7 +81,12 @@ const MainPage = ({ render, setRender }) => {
 									{display: "flex"}:task.state === state?
 										{display: "flex"}:{display: "none"}
 							}
-							onClick={ () => <Modal issue={ task }/> }>
+							onClick={ (e) => {
+								e.preventDefault();
+								// alert(task.title)
+								setOpenModal(true);
+								setModalContent(task)
+							} }>
 							<div className="state-row">
 								<div className="task-state">{ task.state }</div>
 								<div className="task-action">
@@ -97,7 +105,13 @@ const MainPage = ({ render, setRender }) => {
 								(state === "all")?
 									{display: "flex"}:task.state === state?
 										{display: "flex"}:{display: "none"}
-							}>
+							}
+							onClick={(e) => {
+								e.preventDefault();
+								alert(task.title);
+								setOpenModal(true);
+								setModalContent(task)
+							}}>
 							<div className="state-row">
 								<div className="task-state">{ task.state }</div>
 								<div className="task-action">
@@ -116,6 +130,7 @@ const MainPage = ({ render, setRender }) => {
 				There are no more issues!
 			</div>
 		}
+		{openModal? '': <Modal issue={ modalContent }/>}
 	</div>
   )
 }

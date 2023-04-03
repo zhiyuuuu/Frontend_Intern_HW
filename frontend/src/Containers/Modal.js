@@ -1,4 +1,5 @@
 const Modal = ({ issue }) => {
+    console.log(issue);
     return(
         <div className="modal-container">
             <div className="modal">
