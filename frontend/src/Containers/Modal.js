@@ -22,17 +22,21 @@ const Modal = ({ issue, setOpen }) => {
                         { issue.body } 
                     </div>
                 </div>
+                <div className="footer">
+                    <button onClick={() => setOpenEditor(!openEditor)}> Edit </button>
+                    <button>Delete</button>
+                </div>
                 <div className="inputBlock" style={ 
                     openEditor?
                         { display: "flex" }:{ display: "none" }
                 }>
                     <Input.TextArea id='block-title' rows={1}/>
                     <Input.TextArea id='block-body' rows={5}/>
+                    <div className="submit-button">
+                        <button>Update Issue</button>
+                    </div>
                 </div>
-                <div className="footer">
-                    <button onClick={() => setOpenEditor(true)}> Open Editor </button>
-                    <button>Delete</button>
-                </div>
+                
             </div>
         </div>
     )
