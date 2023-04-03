@@ -11,6 +11,14 @@ const Modal = ({ issue, setOpen }) => {
         console.log('onfinish', value);
     }
 
+    const handleEmptyBody = (body) => {
+        if (body === null) {
+            return "Empty content :("
+        } else {
+            return body;
+        }
+    }
+
     return(
         <div className="modal-container">
             <div className="modal">
@@ -23,7 +31,7 @@ const Modal = ({ issue, setOpen }) => {
                         { issue.state }
                     </div>
                     <div className="content">
-                        { issue.body } 
+                        { handleEmptyBody(issue.body) } 
                     </div>
                 </div>
                 <div className="footer">
