@@ -46,8 +46,8 @@ const MainPage = ({ render, setRender }) => {
 
 
 	const filteredIssues = () =>{
-		console.log('issues', issues);
-		console.log('search value', searchValue);
+		// console.log('issues', issues);
+		// console.log('search value', searchValue);
 
 		const filtered = issues.filter((issue) => {
 			if (issue.body != null) {
@@ -67,6 +67,7 @@ const MainPage = ({ render, setRender }) => {
 			setRender={ setRender } 
 			setState={ setState }
 			setSearchValue={ setSearchValue }/>
+		{ openModal? <Modal issue={ modalContent } setOpen={ setOpenModal }/>:
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
@@ -108,7 +109,7 @@ const MainPage = ({ render, setRender }) => {
 							}
 							onClick={(e) => {
 								e.preventDefault();
-								alert(task.title);
+								// alert(task.title);
 								setOpenModal(true);
 								setModalContent(task)
 							}}>
@@ -125,12 +126,12 @@ const MainPage = ({ render, setRender }) => {
 				)
 			}
     	</div>
+		}
 		{
 			!hasMore && <div className="notification">
 				There are no more issues!
 			</div>
 		}
-		{openModal? '': <Modal issue={ modalContent }/>}
 	</div>
   )
 }

@@ -94,3 +94,31 @@
     display: flex;
     justify-content: center;
 }
+
+.modal-container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.modal {
+    width: 80%;
+    height: 60%;
+    background: #FFFFFF;
+    opacity: 0.9;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+    margin-top: 10%;
+    border-radius: 10px;
+}
+
+.modal-title {
+    padding: 7%;
+    font-size: x-large;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-body {
+    padding: 4% 7%;
+}
