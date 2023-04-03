@@ -1,7 +1,12 @@
 import { IoClose } from 'react-icons/io5';
+import { Input } from 'antd'; 
+import { useState } from 'react';
 
 const Modal = ({ issue, setOpen }) => {
-    console.log('issue for modal', issue);
+    // console.log('issue for modal', issue);
+
+    const [openEditor, setOpenEditor] = useState(false);
+
     return(
         <div className="modal-container">
             <div className="modal">
@@ -9,7 +14,25 @@ const Modal = ({ issue, setOpen }) => {
                     <div className="topic">{ issue.title }</div>
                     <IoClose onClick={() => setOpen(false)}/>
                 </div>
-                <div className="modal-body"> { issue.body } </div>
+                <div className="modal-body"> 
+                    <div className="task-state">
+                        { issue.state }
+                    </div>
+                    <div className="content">
+                        { issue.body } 
+                    </div>
+                </div>
+                <div className="inputBlock" style={ 
+                    openEditor?
+                        { display: "flex" }:{ display: "none" }
+                }>
+                    <Input.TextArea id='block-title' rows={1}/>
+                    <Input.TextArea id='block-body' rows={5}/>
+                </div>
+                <div className="footer">
+                    <button onClick={() => setOpenEditor(true)}> Open Editor </button>
+                    <button>Delete</button>
+                </div>
             </div>
         </div>
     )

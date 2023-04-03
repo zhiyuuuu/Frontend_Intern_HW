@@ -5,14 +5,17 @@ import { HiDotsVertical } from "react-icons/hi";
 
 const DropDownMenu = () => {
 
+    const handleMenuClick = (e) => {
+        // console.log('Menu clicked', e);  //e = key
+    };
+
     const menu = (
-        <Menu>
+        <Menu onClick={handleMenuClick}>
           <Menu.Item key="1"><FiEdit /> Edit</Menu.Item>
           <Menu.Item key="2"><AiOutlineDelete /> Delete</Menu.Item>
         </Menu>
     );
-
-
+        
     return(
         <>
             <Dropdown overlay={menu}>
