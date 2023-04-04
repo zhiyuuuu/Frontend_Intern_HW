@@ -8,7 +8,8 @@
 頁面即會出現於 **localhost:3000**
 
 ### 功能
-總共可分為三個主頁面，分別為 Login、MainPage 及 Detail，以下是個頁面的功能：
+總共可分為三個主頁面，分別為 Login、MainPage 及 Detail，以下是各頁面的功能：
+
 **Login**
 - 使用 GitHub login 取得 access token 並進入 MainPage
 
