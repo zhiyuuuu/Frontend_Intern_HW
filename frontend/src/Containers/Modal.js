@@ -1,8 +1,9 @@
 import { IoClose } from 'react-icons/io5';
 import { Input, Form, Popconfirm, message } from 'antd'; 
 import { useState } from 'react';
+import { closeIssue } from '../api';
 
-const Modal = ({ issue, setOpen }) => {
+const Modal = ({ issue, setOpen, setState }) => {
     // console.log('issue for modal', issue);
 
     const [openEditor, setOpenEditor] = useState(false);
@@ -19,8 +20,13 @@ const Modal = ({ issue, setOpen }) => {
         }
     }
 
-    const handleDelete = () => {
-
+    const handleDelete = async(issue) => {
+        const data = await closeIssue(localStorage.getItem("accessToken"), issue.repository.owner.login, issue.repository.name, issue.number);
+        // console.log('frontend handle delete data', data);
+        setState(data.state);
+        console.log('current state after update: ', data.state);
+        setOpen(false);
+        confirmMsg();
     }
 
     const confirmMsg = () => {
@@ -47,12 +53,12 @@ const Modal = ({ issue, setOpen }) => {
                     <Popconfirm
                         title="Close the issue"
                         description="Are you sure to close this issue ?"
-                        onConfirm={ confirmMsg }
-                        // onCancel={}
+                        onConfirm={ () => handleDelete(issue) }
+                        // onCancel={ handleDelete(issue) }
                         okText="Yes"
                         cancelText="No"
                         >
-                        <button onClick={ handleDelete }>Delete</button>
+                        <button>Delete</button>
                     </Popconfirm>
                 </div>
                 <div className="inputBlock" style={ 

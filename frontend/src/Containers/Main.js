@@ -16,6 +16,7 @@ const MainPage = ({ render, setRender }) => {
 
 	const [openModal, setOpenModal] = useState(false);
 	const [modalContent, setModalContent] = useState([]);
+	const [currentState, setCurrentState] = useState("");
 
 	useEffect(() => {
 		async function importIssues(accessToken, page) {
@@ -67,7 +68,7 @@ const MainPage = ({ render, setRender }) => {
 			setRender={ setRender } 
 			setState={ setState }
 			setSearchValue={ setSearchValue }/>
-		{ openModal? <Modal issue={ modalContent } setOpen={ setOpenModal }/>:
+		{ openModal? <Modal issue={ modalContent } setOpen={ setOpenModal } setState={ setCurrentState } />:
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>
@@ -86,10 +87,16 @@ const MainPage = ({ render, setRender }) => {
 								e.preventDefault();
 								// alert(task.title)
 								setOpenModal(true);
-								setModalContent(task)
+								setModalContent(task);
+								setCurrentState(task.state);
 							} }>
 							<div className="state-row">
-								<div className="task-state">{ task.state }</div>
+								<div className="task-state">
+								{ 
+									currentState === task.state || currentState === "" ?
+									( task.state ):(currentState)
+								}
+								</div>
 								<div className="task-action">
 									<DropDownMenu />
 								</div>

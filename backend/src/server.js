@@ -38,6 +38,19 @@ const fetchAssignedIssues = async(token, page) => {
     })
 }
 
+const reqCloseIssue = async(token, owner, repo, issueNumber) => {
+    return await axios.patch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`,
+    { 'state': 'closed' },
+    {
+        headers: {
+            "Authorization": token
+        }
+    }).then((res) => {
+        console.log('issus closed!');
+        return res.data;
+    })
+}
+
 
 //from frontend
 app.get('/getAccessToken', async function (req, res) {
@@ -48,10 +61,10 @@ app.get('/getAccessToken', async function (req, res) {
     res.json(data)
 })
 
-//get user data
+//get issue data
 app.get('/getIssueData', async function(req, res) {
-    console.log('get access token', req.get("Authorization"))
-    console.log('get page', req.get("page"));
+    console.log('get access token: ', req.get("Authorization"))
+    // console.log('get page', req.get("page"));
     // const token = "token " + PERSONAL_ACCESS_TOKEN
     const token = "token " + req.get("Authorization")
     const issuedata = await fetchAssignedIssues(token, req.get("page"))
@@ -59,6 +72,17 @@ app.get('/getIssueData', async function(req, res) {
     res.json(issuedata);
 })
 
+app.get('/closeIssue', async function(req, res) {
+    const accessToken = "Bearer " + req.get('Authorization');
+    const owner = req.get('owner');
+    const repo = req.get('repo');
+    const issueNumber= req.get('issueNumber');
+    console.log('server received header:', accessToken, owner, repo, issueNumber);
+
+    const reqToClose = await reqCloseIssue(accessToken, owner, repo, issueNumber);
+    console.log('close issue', reqToClose);
+    res.json(reqToClose);
+})
 
 const port = process.env.PORT || 4000;
 
