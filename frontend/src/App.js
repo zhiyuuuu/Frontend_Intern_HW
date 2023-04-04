@@ -13,7 +13,7 @@ function App() {
     console.log(codeParam);
 
     //local storage
-    if (codeParam && (localStorage.getItem("accessToken") === "undefined")) {
+    if (codeParam && (localStorage.getItem("accessToken") === "undefined" || localStorage.getItem("accessToken") === null)) {
       async function getAccessToken() {
         await getGitHubToken(codeParam).then((data) => {
           console.log('data in frontend', data); 
