@@ -22,17 +22,10 @@ if (process.env.NODE_ENV === "development") {
 app.use(cors());
 app.use(bodyParser.json());
 
-if (process.env.NODE_ENV === "production") {
-    const __dirname = path.resolve();
-    app.use(express.static(path.join(__dirname, "../frontend", "build")));
-    app.get("/*", function (req, res) {
-      res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
-    });
-}
-
 
 const getAccessToken = async(code) => {
     const params = "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code;
+    console.log(CLIENT_ID);
   
     return await axios.post("https://github.com/login/oauth/access_token" + params, {
     }).then((res) => {
@@ -97,6 +90,14 @@ app.get('/closeIssue', async function(req, res) {
     console.log('close issue', reqToClose);
     res.json(reqToClose);
 })
+
+if (process.env.NODE_ENV === "production") {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, "../frontend", "build")));
+    app.get("/*", function (req, res) {
+      res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+    });
+}
 
 const port = process.env.PORT || 4000;
 
