@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="App">
       {
-        localStorage.getItem("accessToken") === "undefined" ?
+        localStorage.getItem("accessToken") === "undefined" || localStorage.getItem("accessToken") === null ?
         <Login />:<MainPage render={rerender} setRender={setRerender}/>
       }
     </div>
