@@ -3,18 +3,32 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import axios from 'axios';
+import path from "path";
+require('dotenv').config()
 
 // const fetch = (...args) => {
 //     import ('node-fetch').then(({default: fetch}) => fetch(...args));
 // }
 
-const CLIENT_ID = "a578daa362dae8069c34";
-const CLIENT_SECRET = "39e4e1c518cdd6cb88ce3a8ff32b93d8eb6d1114";
+const CLIENT_ID = process.env.GITHUB_OAUTH_CLIENT_ID;
+const CLIENT_SECRET = process.env.GITHUB_OAUTH_CLIENT_SECRET;
 
 const app = express();
 
+if (process.env.NODE_ENV === "development") {
+    app.use(cors());
+}
+
 app.use(cors());
 app.use(bodyParser.json());
+
+if (process.env.NODE_ENV === "production") {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, "../frontend", "build")));
+    app.get("/*", function (req, res) {
+      res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+    });
+}
 
 
 const getAccessToken = async(code) => {
