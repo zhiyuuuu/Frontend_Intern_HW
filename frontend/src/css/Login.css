@@ -21,8 +21,8 @@ html, body {
     padding: 2%;
 }
 
-.block-description {
-    font-size: x-large;
+.login-description {
+    font-size: larger;
     font-weight: 600;
 }
 
