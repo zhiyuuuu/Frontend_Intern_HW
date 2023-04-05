@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { GoMarkGithub } from 'react-icons/go';
 import '../css/Login.css';
 
 const CLIENT_ID = "a578daa362dae8069c34";
@@ -15,7 +15,8 @@ const Login = () => {
                     <p>Login with your GitHub account</p>
                 </div>
                 <div className="login-button">
-                    <Button type='primary' onClick={ loginWithGitHub }> Log in </Button>
+                    <button onClick={ loginWithGitHub }> Log in </button>
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="" />
                 </div>
             </div>
         </div>
