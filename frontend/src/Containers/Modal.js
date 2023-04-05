@@ -1,15 +1,22 @@
 import { IoClose } from 'react-icons/io5';
 import { Input, Form, Popconfirm, message } from 'antd'; 
 import { useState } from 'react';
-import { closeIssue } from '../api';
+import { closeIssue, updateIssue } from '../api';
 
 const Modal = ({ issue, setOpen, setState }) => {
     // console.log('issue for modal', issue);
 
     const [openEditor, setOpenEditor] = useState(false);
 
-    const handleOnFinish = (value) => {
+    const handleOnFinish = async(value) => {
         console.log('onfinish', value);
+        const inputData = {
+            "title": value.Title,
+            "body": value.Body,
+        }
+        // console.log(inputData);
+        const data = await updateIssue(localStorage.getItem("accessToken"), issue.repository.owner.login, issue.repository.name, issue.number, inputData);
+        console.log('updated title and body', data.title, data.body);
     }
 
     const handleEmptyBody = (body) => {
@@ -90,7 +97,7 @@ const Modal = ({ issue, setOpen, setState }) => {
                         </Form.Item>
                         <Form.Item>
                             <div className="submit-button">
-                                <button>Update Issue</button>
+                                <button type='submit'>Update Issue</button>
                             </div>
                         </Form.Item>
                     </Form>

@@ -3,6 +3,10 @@
     height: 100vh;
 }
 
+button:hover{
+    cursor: pointer;
+}
+
 .tasks {
     /* height: 100%; */
     display: flex;

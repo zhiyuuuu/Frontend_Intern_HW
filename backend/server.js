@@ -65,6 +65,20 @@ const reqCloseIssue = async(token, owner, repo, issueNumber) => {
     })
 }
 
+const reqUpdateIssue = async(token, owner, repo, issueNumber, updateData) => {
+    // console.log('server received data', updateData);
+    return await axios.patch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`,
+        updateData,
+        {
+            headers: {
+                "Authorization": token
+            }
+        }).then((res) => {
+            console.log('issue updated!');
+            return res.data;
+        })
+}
+
 
 //from frontend
 app.get('/getAccessToken', async function (req, res) {
@@ -96,6 +110,19 @@ app.get('/closeIssue', async function(req, res) {
     const reqToClose = await reqCloseIssue(accessToken, owner, repo, issueNumber);
     console.log('close issue', reqToClose);
     res.json(reqToClose);
+})
+
+app.get('/updateIssue', async function(req, res) {
+    const accessToken = "Bearer " + req.get('Authorization');
+    const owner = req.get('owner');
+    const repo = req.get('repo');
+    const issueNumber= req.get('issueNumber');
+    const updateData = req.query;
+    // console.log('updateData:', updateData);
+
+    const reqToUpdate = await reqUpdateIssue(accessToken, owner, repo, issueNumber, updateData);
+    // console.log('update issue', reqToUpdate);
+    res.json(reqToUpdate);
 })
 
 if (process.env.NODE_ENV === "production") {

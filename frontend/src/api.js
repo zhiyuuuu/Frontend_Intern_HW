@@ -36,4 +36,19 @@ const closeIssue = async(token, username, repoName, issueNo) => {
   })
 }
 
-export { getGitHubToken, getIssues, closeIssue } 
+const updateIssue = async(token, username, repoName, issueNo, data) => {
+  console.log('api received data', data);
+  return await instance.get("/updateIssue", { 
+    headers: { 
+      "Authorization": token, 
+      "owner": username,
+      "repo": repoName,
+      "issueNumber": issueNo,
+    }, params: data 
+  }).then((res) => {
+    console.log('api received updated issue', res.data);
+    return res.data;
+  })
+}
+
+export { getGitHubToken, getIssues, closeIssue, updateIssue } 
