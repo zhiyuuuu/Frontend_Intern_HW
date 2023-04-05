@@ -28,4 +28,7 @@
 - 點擊 Update issue 按鈕會更新更改後的內容，並跳出成功通知
 - 點擊 Delete 按鈕會跳出確認詢問方塊，按下確認後會回到 MainPage 並更新任務狀態，同時跳出成功通知
 
->Deploy 的部分遇到只能在本機上執行的問題，還在努力嘗試中QQ
+**Deploy**
+- 使用 Railway
+- Deploy 的部分遇到只能在本機上執行的問題，還在努力嘗試中QQ
+- [Deploy 網址](https://frontendinternhw-production.up.railway.app/)
