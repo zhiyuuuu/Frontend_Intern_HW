@@ -94,6 +94,16 @@ button:hover{
     margin-right: 3%;
 }
 
+.logout button{
+    background: #59B1E6;
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    width: 70px;
+    height: 35px;
+    border-style: none;
+}
+
 .notification {
     display: flex;
     justify-content: center;
