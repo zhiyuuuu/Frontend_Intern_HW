@@ -39,9 +39,12 @@ const Modal = ({ issue, setOpen, setState, setContent }) => {
         message.success("Issue closed");
     }
 
-    const confirmMsg = () => {
-        message.success("Issue closed");
-    }
+    const validateWordLimit = (_, value) => {
+        if (value && value.split(' ').length < 30) {
+          return Promise.reject('Required at least 30 words.');
+        }
+        return Promise.resolve();
+    };
 
     return(
         <div className="modal-container">
@@ -94,7 +97,8 @@ const Modal = ({ issue, setOpen, setState, setContent }) => {
                                 {
                                     required: true,
                                     message: 'Please enter at least 30 words.'
-                                }
+                                },
+                                { validator: validateWordLimit }
                             ]}>
                                 <Input.TextArea id='block-body' rows={5}/>
                         </Form.Item>
