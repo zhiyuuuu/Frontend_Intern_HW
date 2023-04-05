@@ -3,7 +3,7 @@ import { Input, Form, Popconfirm, message } from 'antd';
 import { useState } from 'react';
 import { closeIssue, updateIssue } from '../api';
 
-const Modal = ({ issue, setOpen, setState }) => {
+const Modal = ({ issue, setOpen, setState, setContent }) => {
     // console.log('issue for modal', issue);
 
     const [openEditor, setOpenEditor] = useState(false);
@@ -17,6 +17,9 @@ const Modal = ({ issue, setOpen, setState }) => {
         // console.log(inputData);
         const data = await updateIssue(localStorage.getItem("accessToken"), issue.repository.owner.login, issue.repository.name, issue.number, inputData);
         console.log('updated title and body', data.title, data.body);
+        setContent(data);
+        setOpenEditor(false);
+        message.success("Issue updated");
     }
 
     const handleEmptyBody = (body) => {
@@ -33,7 +36,7 @@ const Modal = ({ issue, setOpen, setState }) => {
         setState(data.state);
         console.log('current state after update: ', data.state);
         setOpen(false);
-        confirmMsg();
+        message.success("Issue closed");
     }
 
     const confirmMsg = () => {

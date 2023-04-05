@@ -68,7 +68,7 @@ const MainPage = ({ render, setRender }) => {
 			setRender={ setRender } 
 			setState={ setState }
 			setSearchValue={ setSearchValue }/>
-		{ openModal? <Modal issue={ modalContent } setOpen={ setOpenModal } setState={ setCurrentState } />:
+		{ openModal? <Modal issue={ modalContent } setOpen={ setOpenModal } setState={ setCurrentState } setContent={setModalContent} />:
 		<div className="tasks" style={
 			reverseOrder?
 				{flexDirection: "column-reverse"}:{flexDirection: "column"}}>

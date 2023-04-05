@@ -1,4 +1,3 @@
-import { GoMarkGithub } from 'react-icons/go';
 import '../css/Login.css';
 
 const CLIENT_ID = "a578daa362dae8069c34";
