@@ -1,5 +1,5 @@
-# Frontend_Intern_HW
-#### _2023 Dcard Frontend Intern Homework_
+# Github_Issue_Manager
+#### _A website helps you manage your github issues_
 
 ### 安裝方式
 1. 分別在 root directory, /frontend, /backend 下執行 `yarn`.
